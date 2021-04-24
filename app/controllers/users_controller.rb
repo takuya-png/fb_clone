@@ -20,6 +20,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if params[:back]
+      render :edit
+    else
+      if @user.update(user_params)
+        redirect_to user_path(@user.id), notice: "編集しました"
+      else
+        render :edit
+      end
+    end
+  end
+
+
   private
 
   def set_user
