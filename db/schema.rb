@@ -19,8 +19,10 @@ ActiveRecord::Schema.define(version: 2021_04_24_101750) do
     t.string "title"
     t.text "content"
     t.text "image"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_picture_blogs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -31,4 +33,5 @@ ActiveRecord::Schema.define(version: 2021_04_24_101750) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "picture_blogs", "users"
 end
