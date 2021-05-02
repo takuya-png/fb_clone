@@ -4,12 +4,22 @@
     <title>FbAppClone</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <meta name="viewport" content="width=device-width">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+<body>
+    <header>
+      <ul>
+        <li><a href="#">Bootstrapテキストページ</a></li>
+        <li><a href="#">トップページ</a></li>
+      </ul>
+    </header>
     <%= yield %>
+    <footer>
+      <p>運営会社TAKUYA INTO CODE株式会社</p>
+      <p>© 20015-20016 TAKUYA INTO CODE Corp.</p>
+    </footer>
   </body>
 </html>
