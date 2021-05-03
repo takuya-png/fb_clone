@@ -1,60 +1,78 @@
-class PictureBlogsController < ApplicationController
-  before_action :set_picture_blog, only: %i[ show edit update destroy ]
+class PicturesController < ApplicationController
+  before_action :set_picture, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @picture_blogs = PictureBlog.all
+    @pictures = Picture.all
   end
 
   def show
   end
 
   def new
-    @picture_blog = PictureBlog.new
+    if params[:back]
+      @picture = Picture.new(picture_params)
+    else
+      @picture = current_user.pictures.build
+    end
   end
 
   def edit
   end
 
   def create
-    @picture_blog = PictureBlog.new(picture_blog_params)
-
+    @picture = current_user.pictures.build(picture_params)
     respond_to do |format|
-      if @picture_blog.save
-        format.html { redirect_to @picture_blog, notice: "Picture blog was successfully created." }
-        format.json { render :show, status: :created, location: @picture_blog }
+      if @picture.save
+        format.html { redirect_to @picture, notice: 'Picture was successfully created.' }
+        format.json { render :show, status: :created, location: @picture }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @picture_blog.errors, status: :unprocessable_entity }
+        format.html { render :new }
+        format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
     respond_to do |format|
-      if @picture_blog.update(picture_blog_params)
-        format.html { redirect_to @picture_blog, notice: "Picture blog was successfully updated." }
-        format.json { render :show, status: :ok, location: @picture_blog }
+      if @picture.update(picture_params)
+        format.html { redirect_to @picture, notice: 'Picture was successfully updated.' }
+        format.json { render :show, status: :ok, location: @picture }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @picture_blog.errors, status: :unprocessable_entity }
+        format.html { render :edit }
+        format.json { render json: @picture.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @picture_blog.destroy
+    @picture.destroy
     respond_to do |format|
-      format.html { redirect_to picture_blogs_url, notice: "Picture blog was successfully destroyed." }
+      format.html { redirect_to pictures_url, notice: 'Picture was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
-  private
-    def set_picture_blog
-      @picture_blog = PictureBlog.find(params[:id])
-    end
+  def confirm
+    @picture = current_user.pictures.build(picture_params)
+    render :new if @picture.invalid?
+  end
 
-    def picture_blog_params
-      params.require(:picture_blog).permit(:title, :content, :image)
+  private
+
+  def set_picture
+    @picture = Picture.find(params[:id])
+  end
+
+  def ensure_correct_user
+    @picture = Picture.find(params[:id])
+    if @picture.user_id != current_user.id
+      flash[:notice] = "No authority"
+      redirect_to pictures_url
     end
+  end
+
+  def picture_params
+    params.require(:picture).permit(:content, :image, :image_cache)
+  end
 end
