@@ -1,19 +1,14 @@
-<p id="notice"><%= notice %></p>
-
 <p>
-  <strong>Title:</strong>
-  <%= @picture_blog.title %>
+<strong>Content:</strong>
+<%= @picture_blog.content %>
 </p>
-
-<p>
-  <strong>Content:</strong>
-  <%= @picture_blog.content %>
-</p>
-
+<br>
 <p>
   <strong>Image:</strong>
-  <%= @picture_blog.image %>
+  <%= image_tag @picture_blog.image.url %>
 </p>
-
+<br>
+<div class="link_button1">
 <%= link_to 'Edit', edit_picture_blog_path(@picture_blog) %> |
 <%= link_to 'Back', picture_blogs_path %>
+</div>
