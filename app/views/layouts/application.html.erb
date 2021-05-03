@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FbAppClone</title>
+    <title>RailsAssignment2</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <meta name="viewport" content="width=device-width">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
-<body>
-    <header>
-      <ul>
-        <li><a href="#">Bootstrapテキストページ</a></li>
-        <li><a href="#">トップページ</a></li>
-      </ul>
+  <body>
+    <header class="header">
+      <h1 id="head_title">Facebook Clone</h1>
+      <div class="menu">
+        <% if logged_in? %>
+          <%= link_to 'Home', pictures_path, class: 'links' %>
+          <%= link_to "Profile", user_path(current_user.id), class: 'links' %>
+          <%= link_to "Logout", session_path(current_user.id), class: 'links', method: :delete %>
+          <p>ユーザー名: <%= current_user.name %></p>
+        <% else %>
+          <%= link_to "Sign up", new_user_path, class: 'links' %>
+          <%= link_to "Login", new_session_path, class: 'links' %>
+        <% end %>
+      </div>
     </header>
-    <%= yield %>
-    <footer>
-      <p>運営会社TAKUYA INTO CODE株式会社</p>
-      <p>© 20015-20016 TAKUYA INTO CODE Corp.</p>
+    <div class="content_area">
+      <div class="notification">
+        <% flash.each do |key, value| %>
+          <%= content_tag(:div, value, class: "#{key}") %>
+        <% end %>
+      </div>
+      <%= yield %>
+    </div>
+    <footer class="footer">
+      <p>Copyright © 2021 TAKU ALL RIGHTS RESERVED.</p>
     </footer>
   </body>
 </html>
