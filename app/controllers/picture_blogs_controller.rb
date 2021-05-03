@@ -1,25 +1,20 @@
 class PictureBlogsController < ApplicationController
   before_action :set_picture_blog, only: %i[ show edit update destroy ]
 
-  # GET /picture_blogs or /picture_blogs.json
   def index
     @picture_blogs = PictureBlog.all
   end
 
-  # GET /picture_blogs/1 or /picture_blogs/1.json
   def show
   end
 
-  # GET /picture_blogs/new
   def new
     @picture_blog = PictureBlog.new
   end
 
-  # GET /picture_blogs/1/edit
   def edit
   end
 
-  # POST /picture_blogs or /picture_blogs.json
   def create
     @picture_blog = PictureBlog.new(picture_blog_params)
 
@@ -34,7 +29,6 @@ class PictureBlogsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /picture_blogs/1 or /picture_blogs/1.json
   def update
     respond_to do |format|
       if @picture_blog.update(picture_blog_params)
@@ -47,7 +41,6 @@ class PictureBlogsController < ApplicationController
     end
   end
 
-  # DELETE /picture_blogs/1 or /picture_blogs/1.json
   def destroy
     @picture_blog.destroy
     respond_to do |format|
@@ -57,12 +50,10 @@ class PictureBlogsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_picture_blog
       @picture_blog = PictureBlog.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def picture_blog_params
       params.require(:picture_blog).permit(:title, :content, :image)
     end
