@@ -12,7 +12,7 @@
       <h1 id="head_title">Facebook Clone</h1>
       <div class="menu">
         <% if logged_in? %>
-          <%= link_to 'Home', pictures_path, class: 'links' %>
+          <%= link_to 'Home', picture_blogs_path, class: 'links' %>
           <%= link_to "Profile", user_path(current_user.id), class: 'links' %>
           <%= link_to "Logout", session_path(current_user.id), class: 'links', method: :delete %>
           <p>ユーザー名: <%= current_user.name %></p>

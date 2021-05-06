@@ -3,7 +3,7 @@ class PictureBlogsController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update, :destroy]
 
   def index
-    @pictures = Picture.all
+    @picture_blogs = PictureBlog.all
   end
 
   def show
@@ -11,9 +11,9 @@ class PictureBlogsController < ApplicationController
 
   def new
     if params[:back]
-      @picture = Picture.new(picture_params)
+      @picture_blog = PictureBlog.new(picture_params)
     else
-      @picture = current_user.pictures.build
+      @picture_blog = current_user.picture_blogs.build
     end
   end
 
@@ -21,7 +21,7 @@ class PictureBlogsController < ApplicationController
   end
 
   def create
-    @picture = current_user.pictures.build(picture_params)
+    @picture = current_user.picture_blogs.build(picture_params)
     respond_to do |format|
       if @picture.save
         format.html { redirect_to @picture, notice: 'Picture was successfully created.' }
@@ -35,8 +35,8 @@ class PictureBlogsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @picture.update(picture_params)
-        format.html { redirect_to @picture, notice: 'Picture was successfully updated.' }
+      if @picture_blog.update(picture_params)
+        format.html { redirect_to @picture_blog, notice: 'Picture was successfully updated.' }
         format.json { render :show, status: :ok, location: @picture }
       else
         format.html { render :edit }
@@ -54,25 +54,25 @@ class PictureBlogsController < ApplicationController
   end
 
   def confirm
-    @picture = current_user.pictures.build(picture_params)
-    render :new if @picture.invalid?
+    @picture_blog = current_user.picture_blogs.build(picture_params)
+    render :new if @picture_blog.invalid?
   end
 
   private
 
   def set_picture
-    @picture = Picture.find(params[:id])
+    @picture_blog = PictureBlog.find(params[:id])
   end
 
   def ensure_correct_user
-    @picture = Picture.find(params[:id])
-    if @picture.user_id != current_user.id
+    @picture_blog = PictureBlog.find(params[:id])
+    if @picture_blog.user_id != current_user.id
       flash[:notice] = "No authority"
       redirect_to pictures_url
     end
   end
 
   def picture_params
-    params.require(:picture).permit(:content, :image, :image_cache)
+    params.require(:picture_blog).permit(:content, :image, :image_cache)
   end
 end
