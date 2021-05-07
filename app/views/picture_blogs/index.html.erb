@@ -1,29 +1,29 @@
 <h1>Home</h1>
 
-<table>
-<% @picture_blogs.each do |picture_blog| %>
-  <tbody>
-    <tr>
-      <td><%= picture_blog.user.name %></td>
-    </tr>
-    <tr>
-      <td><%= picture_blog.content %></td>
-    </tr>
-    <tr>
-      <td><%= image_tag(picture_blog.image.url) %></td>
-    </tr>
-  </tbody>
-  <tfooter>
-    <tr>
-      <td>
-        <%= link_to 'Show', picture_blog %>
-        <% if picture_blog.user.id == current_user.id %>
-          <%= link_to 'Edit', edit_picture_blog_path(picture_blog) %>
-          <%= link_to 'Destroy', picture_blog, method: :delete, data: { confirm: 'Are you sure?' } %>
-        <% end %>
-      </td>
-    </tr>
-  </tfooter>
-<% end %>
-</table>
+<div>
+  <% @picture_blogs.each do |picture_blog| %>
+    <div>
+      <div>
+        <div><%= picture_blog.user.name %></td>
+      </div>
+      <div>
+        <div><%= picture_blog.content %></td>
+      </div>
+      <div>
+        <div><%= image_tag(picture_blog.image.url) %></td>
+      </div>
+    </div>
+    <div>
+      <div>
+        <div>
+          <%= link_to 'Show', picture_blog %>
+          <% if picture_blog.user.id == current_user.id %>
+            <%= link_to 'Edit', edit_picture_blog_path(picture_blog) %>
+            <%= link_to 'Destroy', picture_blog, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 <%= link_to '投稿する', new_picture_blog_path %>
